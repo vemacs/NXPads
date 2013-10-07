@@ -1,0 +1,12 @@
+main: com.projectbarks.targetpads.TargetPads
+name: TargetPads
+version: 0.2
+author: ProjectBarks
+description: Simple Bounce pads Plugin.
+
+commands:
+   pads:
+      description: Add new bounce points.
+      usage: /<command> [function]
+      permission: targetpads.admin
+      permission-message: You don't have <permission>
