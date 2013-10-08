@@ -43,9 +43,9 @@ public class TargetPads extends JavaPlugin implements Listener {
             Location dLoc = data.getCurrent();
             if (pLoc.getWorld().getName().equalsIgnoreCase(dLoc.getWorld().getName())) {
                 if (x == dLoc.getBlockX() && y == dLoc.getBlockY() && z == dLoc.getBlockZ()) {
-                    player.setVelocity(data.gotoTarget(pLoc));
+                    player.setVelocity(data.getVectorToTarget(pLoc));
                     player.playSound(event.getPlayer().getLocation(), Sound.BAT_TAKEOFF, 5.0F, 0.0F);
-                    player.playEffect(dLoc, Effect.SMOKE, 0F);
+                    //player.playEffect(dLoc, Effect.SMOKE, 0F);
                 } 
             }
         }

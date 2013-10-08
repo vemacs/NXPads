@@ -37,9 +37,9 @@ public class PadData {
         return vec;
     }
 
-    public Vector gotoTarget(Location loc) {
+    public Vector getVectorToTarget(Location loc) {
         Vector c = loc.toVector();
-        final double t = 10; //time
+        final long t = 20L; //time
         double hzMult = Math.pow(1 / 0.91, t / 2);
         double yVeloc = (3.92 * (1 - Math.pow(0.98, 10))) + (target.getY() - c.getY()) / t;
 
