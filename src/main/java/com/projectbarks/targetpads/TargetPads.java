@@ -1,6 +1,5 @@
 package com.projectbarks.targetpads;
 
-import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -13,15 +12,18 @@ public class TargetPads extends JavaPlugin implements Listener {
 
     private Config config;
     private Commands commands;
+    private TimedLauncher timedL;
 
     @Override
     public void onLoad() {
         this.config = new Config(this);
         this.commands = new Commands(config);
+        this.timedL = new TimedLauncher();
     }
 
     @Override
     public void onEnable() {
+        timedL.runTaskTimer(this, 0L, 1L);
         this.config.load();
         this.getCommand("pads").setExecutor(commands);
         this.getServer().getPluginManager().registerEvents(this, this);
@@ -35,18 +37,23 @@ public class TargetPads extends JavaPlugin implements Listener {
     @EventHandler
     public void onMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
+        if (!TimedLauncher.canMove(player)) {
+            event.setCancelled(true);
+            return;
+        }
+
         for (PadData data : this.config.getPads()) {
-            Location pLoc = player.getLocation();
-            int x = pLoc.getBlockX();
-            int y = pLoc.getBlockY();
-            int z = pLoc.getBlockZ();
+            Location pLoc = event.getTo();
+            int x = (int) Math.round(pLoc.getX());
+            int y = (int) Math.round(pLoc.getY());
+            int z = (int) Math.round(pLoc.getZ());
             Location dLoc = data.getCurrent();
             if (pLoc.getWorld().getName().equalsIgnoreCase(dLoc.getWorld().getName())) {
                 if (x == dLoc.getBlockX() && y == dLoc.getBlockY() && z == dLoc.getBlockZ()) {
-                    player.setVelocity(data.getVectorToTarget(pLoc));
-                    player.playSound(event.getPlayer().getLocation(), Sound.BAT_TAKEOFF, 5.0F, 0.0F);
+                    player.setVelocity(data.getVectorToTarget(player.getLocation()));
+                    player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 5.0F, 0.0F);
                     //player.playEffect(dLoc, Effect.SMOKE, 0F);
-                } 
+                }
             }
         }
     }
