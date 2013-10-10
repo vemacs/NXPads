@@ -45,11 +45,11 @@ public class Commands implements CommandExecutor {
                     unsavedPads.remove(cs.getName());
                     config.save();
                     return true;
-                } else if(function.equals("del") || function.equals("delete")) {
-                    if(args.length >= 2) {
+                } else if (function.equals("del") || function.equals("delete")) {
+                    if (args.length >= 2) {
                         try {
                             int id = Integer.parseInt(args[1]);
-                            if(id >= 0 && id < config.getPads().size()) {
+                            if (id >= 0 && id < config.getPads().size()) {
                                 config.getPads().remove(id);
                                 cs.sendMessage("Pad " + id + " was deleted");
                             } else {
@@ -62,10 +62,10 @@ public class Commands implements CommandExecutor {
                     } else {
                         cs.sendMessage("/pads del [id]");
                     }
-                } else if(function.equals("list")) {
+                } else if (function.equals("list")) {
                     cs.sendMessage("List- [id]: [cords]");
                     int i = 0;
-                    for(PadData d : config.getPads()) {
+                    for (PadData d : config.getPads()) {
                         Location c = d.getCurrent();
                         cs.sendMessage("[" + i + "]:" + c.getBlockX() + ", " + c.getBlockY() + ", " + c.getBlockZ());
                         i++;

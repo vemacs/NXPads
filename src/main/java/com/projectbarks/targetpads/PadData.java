@@ -50,6 +50,13 @@ public class PadData {
         return vec;
     }
 
+    public double getDistance(Location loc) {
+        Location s = loc.subtract(target);
+        return Math.sqrt(Math.abs(Math.pow(s.getX(), 2))
+                         + Math.abs(Math.pow(s.getY(), 2))
+                         + Math.abs(Math.pow(s.getZ(), 2)));
+    }
+
     public void setTarget(Location target) {
         this.target = target;
     }

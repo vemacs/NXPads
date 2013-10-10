@@ -31,7 +31,7 @@ public class Config extends AbstractConfig {
     @Override
     protected void saveConfig() {
         int i = 0;
-        for(PadData data : this.getPads()) {
+        for (PadData data : this.getPads()) {
             this.getConfig().set(i + ".target", locToString(data.getTarget()));
             this.getConfig().set(i + ".pad", locToString(data.getCurrent()));
             i++;

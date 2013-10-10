@@ -1,5 +1,5 @@
 main: com.projectbarks.targetpads.TargetPads
-name: TargetPads
+name: NXPads
 version: 0.2
 author: ProjectBarks
 description: Simple Bounce pads Plugin.
