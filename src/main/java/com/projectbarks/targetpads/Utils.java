@@ -1,6 +1,5 @@
 package com.projectbarks.targetpads;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
@@ -20,7 +19,6 @@ public class Utils {
         Vector baseVector = end.toVector().subtract(start.toVector());
         float length = (float) baseVector.clone().setY(0).length();
         float height = baseVector.getBlockY();
-        Bukkit.getLogger().info(height + ", " + length);
         float launchAngle = getLaunchAngle(length, height, initialVelocity, gravConstant, true);
         return baseVector.clone().setY(0).normalize().multiply(initialVelocity).setY(Math.sin(launchAngle));
     }
