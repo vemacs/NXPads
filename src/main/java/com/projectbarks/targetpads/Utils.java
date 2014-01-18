@@ -18,17 +18,10 @@ public class Utils {
 
     public static Vector getLaunchVector(Location start, Location end) {
         Vector baseVector = end.toVector().subtract(start.toVector());
-        Bukkit.getLogger().info("Start vector: " + baseVector.toString());
         float length = (float) baseVector.clone().setY(0).length();
-        float launchAngle = getLaunchAngle(length, baseVector.getBlockY(), initialVelocity, gravConstant, true);
-        if (launchAngle == Float.NaN)
-            launchAngle = getLaunchAngle(length, baseVector.getBlockY(), initialVelocity, gravConstant, false);
-        Bukkit.getLogger().info("Angle: " + launchAngle + "");
-        baseVector.setY(0);
-        baseVector.normalize().multiply(Math.cos(launchAngle));
-        baseVector.setY(Math.sin(launchAngle));
-        baseVector.normalize().multiply(initialVelocity);
-        Bukkit.getLogger().info("Velocity: " + baseVector.toString());
-        return baseVector;
+        float height = baseVector.getBlockY();
+        Bukkit.getLogger().info(height + ", " + length);
+        float launchAngle = getLaunchAngle(length, height, initialVelocity, gravConstant, true);
+        return baseVector.clone().setY(0).normalize().multiply(initialVelocity).setY(Math.sin(launchAngle));
     }
 }
