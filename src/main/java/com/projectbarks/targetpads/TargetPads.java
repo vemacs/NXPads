@@ -9,8 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 public class TargetPads extends JavaPlugin implements Listener {
     
@@ -55,54 +53,12 @@ public class TargetPads extends JavaPlugin implements Listener {
             Location dLoc = data.getCurrent();
             if (pLoc.getWorld().getName().equalsIgnoreCase(dLoc.getWorld().getName())) {
                 if (x == dLoc.getBlockX() && y == dLoc.getBlockY() && z == dLoc.getBlockZ()) {
-                    player.setVelocity(data.getVectorToTarget(player.getLocation()));
+                    player.setVelocity(Utils.getLaunchVector(data.getCurrent(), data.getTarget()));
                     player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 5.0F, 0.0F);
                     //player.playEffect(dLoc, Effect.SMOKE, 0F);
-                    new ConstantTargeter(player, data).runTaskTimer(this, 0, 1L);
                     event.setCancelled(true);
                 }
             }
         }
     }
-    
-    private class ConstantTargeter extends BukkitRunnable {
-        
-        private PadData data;
-        private Player player;
-        private int count;
-        private int maxCount;
-        
-        public ConstantTargeter(Player player, PadData data) {
-            this.player = player;
-            this.data = data;
-            count = 0;
-            this.maxCount = (int) this.data.getDistance(player.getLocation());
-        }
-        
-        public void run() {
-            if (!player.isOnline()) {
-                this.cancel();
-                return;
-            } else if (count >= maxCount) {
-                player.teleport(data.getTarget());
-                this.cancel();
-                return;
-            }
-            Location pLoc = player.getLocation();
-            int x = pLoc.getBlockX();
-            int z = pLoc.getBlockZ();
-            Location dLoc = data.getTarget();
-            if (pLoc.getWorld().getName().equalsIgnoreCase(dLoc.getWorld().getName())) {
-                if (x <= dLoc.getBlockX() + 3 && x >= dLoc.getBlockX() - 3 && z <= dLoc.getBlockZ() + 3 && z >= dLoc.getBlockZ() - 3) {
-                    player.setVelocity(new Vector(0, 0, 0));
-                    this.cancel();
-                } else {
-                    if (count < Math.round(maxCount / 2)) {
-                        player.setVelocity(data.getVectorToTarget(player.getLocation()));
-                    }
-                }
-            }
-            count++;
-        }
     }
-}
