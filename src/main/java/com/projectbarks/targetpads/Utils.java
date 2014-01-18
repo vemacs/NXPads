@@ -20,6 +20,6 @@ public class Utils {
         float length = (float) baseVector.clone().setY(0).length();
         float height = baseVector.getBlockY();
         float launchAngle = getLaunchAngle(length, height, initialVelocity, gravConstant, true);
-        return baseVector.clone().setY(0).normalize().multiply(initialVelocity).setY(Math.sin(launchAngle));
+        return baseVector.clone().setY(0).normalize().multiply(initialVelocity).setY(Math.sin(launchAngle) * initialVelocity);
     }
 }

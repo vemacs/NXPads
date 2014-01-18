@@ -53,7 +53,7 @@ public class TargetPads extends JavaPlugin implements Listener {
             Location dLoc = data.getCurrent();
             if (pLoc.getWorld().getName().equalsIgnoreCase(dLoc.getWorld().getName())) {
                 if (x == dLoc.getBlockX() && y == dLoc.getBlockY() && z == dLoc.getBlockZ()) {
-                    player.setVelocity(Utils.getLaunchVector(player.getLocation(), data.getTarget().add(0, 4, 0)));
+                    player.setVelocity(Utils.getLaunchVector(player.getLocation().subtract(0, 2, 0), data.getTarget().add(0, 4, 0)));
                     player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 5.0F, 0.0F);
                     //player.playEffect(dLoc, Effect.SMOKE, 0F);
                     event.setCancelled(true);
