@@ -7,7 +7,7 @@ import org.bukkit.util.Vector;
 public class Utils {
     private Utils() {}
     public static final float gravConstant = 32;
-    public static final float initialVelocity = 3;
+    public static final float initialVelocity = 5;
 
     public static float getLaunchAngle(float deltaX, float deltaY, float initialVelocity, float gravConstant, boolean plusMinus) {
         return (float) Math.atan(
@@ -19,7 +19,9 @@ public class Utils {
     public static Vector getLaunchVector(Location start, Location end) {
         Vector baseVector = end.toVector().subtract(start.toVector());
         Bukkit.getLogger().info("Start vector: " + baseVector.toString());
-        float launchAngle = getLaunchAngle(baseVector.getBlockX(), baseVector.getBlockY(), initialVelocity, gravConstant, true);
+        float launchAngle = getLaunchAngle(Math.abs(baseVector.getBlockX()), baseVector.getBlockY(), initialVelocity, gravConstant, true);
+        if (launchAngle == Float.NaN)
+            launchAngle = getLaunchAngle(Math.abs(baseVector.getBlockX()), baseVector.getBlockY(), initialVelocity, gravConstant, false);
         Bukkit.getLogger().info("Angle: " + launchAngle + "");
         baseVector.setY(0);
         baseVector.normalize().multiply(Math.cos(launchAngle));
